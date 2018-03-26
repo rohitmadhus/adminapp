@@ -3,13 +3,25 @@
 import Vue from 'vue'
 import App from './App'
 import VueFire from 'vuefire'
-
+import VueRouter from 'vue-router'
+import routes from './routes'
+import AppView from './App.vue'
 
 Vue.use(VueFire)
+Vue.use(VueRouter)
+
+var router = new VueRouter({
+  routes,
+  mode: 'history',
+  linkExactActiveClass: 'active',
+  scrollBehavior: (to, from, savedPosition) => {
+    return savedPosition || { x: 0, y: 0 }
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  components: { App },
-  template: '<App/>'
+  el: '#root',
+  router,
+  render: h => h(AppView)
 })
