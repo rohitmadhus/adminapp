@@ -1,33 +1,57 @@
 <template>
 
 
-<div id="app">
+<div id="app" >
    <div class="alert alert-primary" role="alert">
-  This is a primary alert—check it out!
+    <h2>Welcome</h2>
    </div>
+
   <div class="container">
+   <table>
+    <tr>
+      <td>
+    <img src="./assets/bcg1.jpg" width="300" alt="">
+       </td>
+       <td>  
       <div class="page-header">
-        <h1>Welcome</h1>
-        <h2>Update the analysis system</h2>
+        <h3>UPDATE THE ANALYSIS SYSTEM</h3>
       </div>
+    </td>
+  </tr>
+</table>
 
 
        <div class="panel panel-default">
           <div class="panel-heading">
-          <h3 class="panel-title">Add New Question</h3>
+          <br>
+          <h4 class="panel-title">ADD NEW QUESTION</h4>
+          <br>
           </div>
 
           <div class="panel-body">
             <form id="form" class="form-inline" v-on:submit.prevent="addQues">
             <div class="form-group">
-            <label for="quesNo">No:</label>
-            <input type="text" id="quesnum" class="form-control" v-model="newQues.qno">
+            <label for="quesNo">Q no:</label>
+            <input type="text" id="quesnum" class="form-control" size="5" v-model="newQues.qno">
+            <p> &nbsp; &nbsp; &nbsp;</p>
             </div>
+            
+            
+            <div class="form-group">
+            <label for="type">Type:</label>
+            <select v-model="newQues.type" id="type" class="form-control"  >
+            <option value = "metro officials" >metro officails </option>
+            <option  value = "passengers" selected>passengers </option>
+            </select>
+            <p> &nbsp; &nbsp; &nbsp;</p>
+            </div>
+            
 
             <div class="form-group">
             <label for="question">Question:</label>
-            <input type="text" id="question" class="form-control" v-model="newQues.ques">
+            <input type="text" id="question" class="form-control" size="35" v-model="newQues.ques">
             </div>
+            <p> &nbsp; &nbsp; &nbsp;</p>
  
             <input type="submit" class="btn btn-primary" value="Add Question">
             </form>
@@ -38,6 +62,9 @@
 
       <div class="panel panel-default">
            <div class="panel-heading">
+           <br>
+          <br>
+          <br>
            <h3 class="panel-title">Question List</h3>
            </div>
            <div class="panel-body">
@@ -45,15 +72,17 @@
            <thead>
              <tr>
                <th>No:</th>
-               <th>Question</th>
-               <th></th>
+               <th>Type:</th>
+               <th>Question:</th>
+               <th>Delete:</th>
                </tr>
            </thead>
            <tbody>
                <tr v-for="q in questions">
                <td><a v-bind:href="q.url">{{q.qno}}</a></td>
+               <td>{{q.type}}</td>
                <td>{{q.ques}}</td>
-               <td> <button type="button" class="btn btn-default" aria-label="Right Align" v-on:click="removeQues(q)"><span class="glyphicon glyphicon-trash" aria-hidden="true" ></span> </button>
+               <td> <button class="glyphicon glyphicon-trash" aria-hidden="true" v-on:click="removeQues(q)" ></button>
                </td>
                </tr>
            </tbody>
@@ -99,7 +128,8 @@ export default {
     return {
       newQues: {
           qno: '',
-          ques: ''
+          ques: '',
+          type: ''
       }
     }
   },
@@ -109,7 +139,11 @@ export default {
         quesRef.push(this.newQues);
         this.newQues.qno = '';
         this.newQues.ques = '';
+        this.newQues.type = '';
       },
+      
+      
+
 
       removeQues: function (q) {
         quesRef.child(q['.key']).remove()
