@@ -20,6 +20,7 @@ export default {
           firebase.auth().signInWithPopup(provider).then(result => {
               var user = result.user
               console.log(user)
+              this.$router.replace('/s')
           })
       }
   }
